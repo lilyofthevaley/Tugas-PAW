@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <style>
+        body {
+            background-color: #a1c4fd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .contact-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            width: 90%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .gender-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .gender-container label {
+            margin-left: 25px;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            background-color: #6a5acd;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #5a4fbd;
+        }
+        .success-message {
+            color: green;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-form">
+        <h2>Contact Form</h2>
+        <form id="contactForm">
+            <label for="name">Nama:</label>
+            <input type="text" id="name" name="name" required>
+            <div id="nameError" class="error hidden">Harus diisi</div>
+
+            <label for="phone">No Hp/WA:</label>
+            <input type="text" id="phone" name="phone" required>
+            <div id="phoneError" class="error hidden">Nomor HP tidak boleh kurang dari 12 digit</div>
+
+            <label>Jenis Kelamin:</label>
+            <div class="gender-container">
+                <label for="male">Laki-Laki</label>
+                <input type="radio" id="male" name="gender" value="Laki-Laki" required>
+                <label for="female">Perempuan</label>
+                <input type="radio" id="female" name="gender" value="Perempuan" required>
+            </div>
+            
+            <label for="education">Pendidikan:</label>
+            <select id="education" name="education" required>
+                <option value="SD">SD</option>
+                <option value="SMP">SMP</option>
+                <option value="SMA">SMA</option>
+                <option value="Kuliah">Kuliah</option>
+            </select>
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required>
+            <div id="emailError" class="error hidden">Email tidak valid</div>
+
+            <label for="needs">Keperluan:</label>
+            <input type="text" id="needs" name="needs" required>
+            <div id="needsError" class="error hidden">Harus diisi</div>
+
+            <button type="submit">Submit</button>
+        </form>
+        <div id="successMessage" class="success-message hidden">Form submitted, thank you!</div>
+    </div>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            const name = document.getElementById("name");
+            const phone = document.getElementById("phone");
+            const email = document.getElementById("email");
+            const needs = document.getElementById("needs");
+
+            const nameError = document.getElementById("nameError");
+            const phoneError = document.getElementById("phoneError");
+            const emailError = document.getElementById("emailError");
+            const needsError = document.getElementById("needsError");
+            const successMessage = document.getElementById("successMessage");
+
+            nameError.classList.add("hidden");
+            phoneError.classList.add("hidden");
+            emailError.classList.add("hidden");
+            needsError.classList.add("hidden");
+            successMessage.classList.add("hidden");
+
+            if (!name.value.trim()) {
+                nameError.classList.remove("hidden");
+                isValid = false;
+            }
+            if (!needs.value.trim()) {
+                needsError.classList.remove("hidden");
+                isValid = false;
+            }
+            if (!/^[0-9]{11,12}$/.test(phone.value)) {
+                phoneError.classList.remove("hidden");
+                isValid = false;
+            }
+            if (!email.value.includes("@")) {
+                emailError.classList.remove("hidden");
+                isValid = false;
+            }
+            
+            if (isValid) {
+                successMessage.classList.remove("hidden");
+            }
+        });
+    </script>
+</body>
+</html>
